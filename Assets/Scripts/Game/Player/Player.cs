@@ -5,6 +5,7 @@ using UnityEngine.Rendering.Universal;
 
 public class Player : MonoBehaviour {
     [SerializeField] private Joystick joystick;
+    [SerializeField] private Animator animator;
     [SerializeField] private float velocity = 1f;
 
     private CharacterController characterController;
@@ -15,9 +16,10 @@ public class Player : MonoBehaviour {
 
     private void Update() {
         if (joystick.IsActive) {
-            Debug.Log(joystick.Value.normalized);
             transform.localRotation = Quaternion.Euler(-joystick.Value);
             characterController.Move(transform.forward * velocity * Time.deltaTime);
         }
+
+        animator.SetBool("move", joystick.IsActive);
     }
 }
