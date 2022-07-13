@@ -1,5 +1,8 @@
+using Game.Manager;
 using DungeonArchitect;
 using DungeonArchitect.Builders.Grid;
+using DungeonArchitect.Builders.GridFlow;
+using Game.Manager;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,10 +16,20 @@ namespace DungeonRPG.Game.Map {
         }
 
         private void OnClickButton() {
-            var dungeonConfig = dungeon.GetComponent<GridDungeonConfig>();
-            dungeonConfig.Seed = (uint)Random.Range(0, 10000);
-            
+            var dungeonConfig = dungeon.GetComponent<GridFlowDungeonConfig>();
+            dungeonConfig.Seed = (uint) Random.Range(0, 10000);
+
             dungeon.Build();
+
+            GameManager.Instance.PutPlayerSpawnPoint();
         }
+
+#if UNITY_EDITOR
+        private void Update() {
+            if (UnityEditor.EditorApplication.isPlaying == false) {
+                dungeon.DestroyDungeon();
+            }
+        } 
+#endif
     }
 }
