@@ -1,3 +1,4 @@
+using DungeonRPG.Game.Map;
 using Game.Manager;
 using UnityEngine;
 
@@ -26,13 +27,22 @@ namespace Game.Manager {
                 return spawanPointObject.transform.position;
             }
         }
-    
+
         private object lockObject = new object();
         private GameObject spawanPointObject;
+        private DungeonMapCreator dungeonMapCreator;
 
+        private void Start() {
+            dungeonMapCreator = GameObject.Find("DungeonMapCreator").GetComponent<DungeonMapCreator>();
+        }
 
         public void PutPlayerSpawnPoint() {
             Player.transform.position = SpawnPoint;
+        }
+
+        public void ResetGame() {
+            dungeonMapCreator.SetNewDungeon();
+            PutPlayerSpawnPoint();
         }
     }
 }

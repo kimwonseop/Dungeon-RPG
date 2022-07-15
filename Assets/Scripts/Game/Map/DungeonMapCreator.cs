@@ -24,6 +24,13 @@ namespace DungeonRPG.Game.Map {
             GameManager.Instance.PutPlayerSpawnPoint();
         }
 
+        public void SetNewDungeon() {
+            var dungeonConfig = dungeon.GetComponent<GridFlowDungeonConfig>();
+            dungeonConfig.Seed = (uint) Random.Range(0, 10000);
+
+            dungeon.Build();
+        }
+
 #if UNITY_EDITOR
         private void Update() {
             if (UnityEditor.EditorApplication.isPlaying == false) {
